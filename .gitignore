@@ -6,6 +6,4 @@ target/
 .cache
 build
 
-test_funcref_register_callback.sh
-test_funcref_qsort.sh
-test_funcref_qsort_without_stub.sh
+test.sh
