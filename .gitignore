@@ -1,3 +1,9 @@
 target/
 .mooncakes/
 .DS_Store
+
+.gitignore
+.cache
+build
+
+test.sh
