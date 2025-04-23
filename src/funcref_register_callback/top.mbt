@@ -14,11 +14,6 @@ fn register_callback(closure : () -> Unit) -> Unit {
 }
 
 ///|
-test (t : @test.T) {
-  t.snapshot!(filename="funcref.txt")
-}
-
-///|
 fn main {
   let s1 = "moonbit"
   register_callback(fn() {

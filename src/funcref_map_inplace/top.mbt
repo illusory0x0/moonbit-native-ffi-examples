@@ -20,10 +20,16 @@ fn map_inplace(xs : FixedArray[Point], closure : (Point) -> Point) -> Unit {
 ///|
 fn main {
   let xs : FixedArray[Point] = @quickcheck.samples(4) |> FixedArray::from_array
-  map_inplace(xs, fn { x => x })
+  let mut i = 0
+  fn f(x) {
+    println(i)
+    i += 1
+    x
+  }
+  map_inplace(xs, f)
   println(xs)
-  map_inplace(xs, fn { x => x })
+  map_inplace(xs, f)
   println(xs)
-  map_inplace(xs, fn { x => x })
+  map_inplace(xs, f)
   println(xs)
 }

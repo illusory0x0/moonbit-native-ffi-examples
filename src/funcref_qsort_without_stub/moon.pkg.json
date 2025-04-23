@@ -6,5 +6,10 @@
       "native"
     ]
   },
-  "native-stub": ["stub.c"]
+  "native-stub": ["stub.c"],
+  "link": {
+    "native": {
+      "cc-flags": "-fsanitize=address -fsanitize=undefined"
+    }
+  },
 }
