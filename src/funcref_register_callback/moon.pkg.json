@@ -8,10 +8,5 @@
   },
   "native-stub": [
     "stub.c"
-  ],
-  "link": {
-    "native": {
-      "cc-flags": "-fsanitize=address -fsanitize=undefined"
-    }
-  },
+  ]
 }
