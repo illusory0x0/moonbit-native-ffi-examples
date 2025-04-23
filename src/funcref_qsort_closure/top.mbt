@@ -5,7 +5,7 @@ struct Point {
 } derive(@quickcheck.Arbitrary, Compare, Eq, Show)
 
 ///|
-#borrow(xs, comp,closure)
+#borrow(xs, comp, closure)
 extern "c" fn ffi_qsort(
   xs : FixedArray[Point],
   comp : FuncRef[((Point, Point) -> Int, Point, Point) -> Int],
@@ -24,10 +24,10 @@ fn main {
       |> FixedArray::from_array
     let ys = xs.copy()
     let mut i = 0
-    let comp : (Point, Point) -> Int = fn(x, y) { 
+    let comp : (Point, Point) -> Int = fn(x, y) {
       i += 1
       println(i)
-      x.compare(y) 
+      x.compare(y)
     }
     inspect!(
       xs,

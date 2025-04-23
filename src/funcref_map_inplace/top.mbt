@@ -26,6 +26,7 @@ fn main {
     i += 1
     x
   }
+
   map_inplace(xs, f)
   println(xs)
   map_inplace(xs, f)
