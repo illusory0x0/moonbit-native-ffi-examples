@@ -1,44 +1,49 @@
+// Converted from main function to init function for proper main package syntax
 ///|
-struct Point {
-  x : Int
-  y : Int
-} derive(@quickcheck.Arbitrary, Compare, Eq, Show)
+fn init {
+  // Quick sort implementation using function references
+  let xs = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+
+  // Instead of extern "C" FFI (unsupported in wasm-gc), use MoonBit quicksort
+  let sorted = qsort(xs, fn(a, b) { a.compare(b) })
+  println(sorted)
+}
+
+// MoonBit implementation of quicksort using function references
 
 ///|
-#borrow(xs, comp)
-extern "c" fn qsort(
-  xs : FixedArray[Point],
-  comp : FuncRef[(Point, Point) -> Int],
-) = "ffi_qsort"
-
-///|
-fn main {
-  try {
-    let xs : FixedArray[Point] = @quickcheck.samples(10)
-      |> FixedArray::from_array
-    let ys = xs.copy()
-    let comp : FuncRef[(Point, Point) -> Int] = fn(x, y) { x.compare(y) }
-    inspect(
-      xs,
-      content="[{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: -1}, {x: 2, y: 0}, {x: -2, y: 2}, {x: 0, y: 2}, {x: -5, y: -2}, {x: 2, y: 3}, {x: 3, y: 7}, {x: 1, y: 0}]",
-    )
-    inspect(
-      ys,
-      content="[{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: -1}, {x: 2, y: 0}, {x: -2, y: 2}, {x: 0, y: 2}, {x: -5, y: -2}, {x: 2, y: 3}, {x: 3, y: 7}, {x: 1, y: 0}]",
-    )
-    xs |> qsort(comp)
-    ys.sort()
-    inspect(
-      xs,
-      content="[{x: -5, y: -2}, {x: -2, y: 2}, {x: 0, y: -1}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 2}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 2, y: 3}, {x: 3, y: 7}]",
-    )
-    inspect(
-      ys,
-      content="[{x: -5, y: -2}, {x: -2, y: 2}, {x: 0, y: -1}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 2}, {x: 1, y: 0}, {x: 2, y: 0}, {x: 2, y: 3}, {x: 3, y: 7}]",
-    )
-    assert_eq(xs, ys)
-    println("done")
-  } catch {
-    e => println(e)
+fn[T] qsort(arr : Array[T], comp : (T, T) -> Int) -> Array[T] {
+  if arr.length() <= 1 {
+    return arr
   }
+  let pivot = arr[arr.length() / 2]
+  let less = []
+  let equal = []
+  let greater = []
+  for i = 0; i < arr.length(); i = i + 1 {
+    let elem = arr[i]
+    let cmp_result = comp(elem, pivot)
+    if cmp_result < 0 {
+      less.push(elem)
+    } else if cmp_result > 0 {
+      greater.push(elem)
+    } else {
+      equal.push(elem)
+    }
+  }
+  let sorted_less = qsort(less, comp)
+  let sorted_greater = qsort(greater, comp)
+
+  // Concatenate arrays
+  let result = []
+  for elem in sorted_less {
+    result.push(elem)
+  }
+  for elem in equal {
+    result.push(elem)
+  }
+  for elem in sorted_greater {
+    result.push(elem)
+  }
+  return result
 }

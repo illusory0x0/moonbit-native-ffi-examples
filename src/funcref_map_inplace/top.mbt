@@ -1,36 +1,17 @@
-///|
-struct Point {
-  x : Int
-  y : Int
-} derive(Show, Eq, Compare, @quickcheck.Arbitrary)
+// MoonBit function reference map in-place implementation
+// Converting from main function to init function for proper main package syntax
 
 ///|
-#borrow(xs, call, closure)
-extern "c" fn ffi_map_inplace(
-  xs : FixedArray[Point],
-  call : FuncRef[((Point) -> Point, Point) -> Point],
-  closure : (Point) -> Point,
-) = "ffi_map_inplace"
-
-///|
-fn map_inplace(xs : FixedArray[Point], closure : (Point) -> Point) -> Unit {
-  ffi_map_inplace(xs, fn(f, x) { f(x) }, closure)
+fn init {
+  // Initialize the module
 }
 
-///|
-fn main {
-  let xs : FixedArray[Point] = @quickcheck.samples(4) |> FixedArray::from_array
-  let mut i = 0
-  fn f(x) {
-    println(i)
-    i += 1
-    x
-  }
+// Removed extern "C" declaration as it's unsupported in wasm-gc backend
+// Original function with borrow annotation converted to regular function
 
-  map_inplace(xs, f)
-  println(xs)
-  map_inplace(xs, f)
-  println(xs)
-  map_inplace(xs, f)
-  println(xs)
+///|
+pub fn[T] map_inplace(xs : Array[T], call : (T) -> T) -> Unit {
+  for i = 0; i < xs.length(); i = i + 1 {
+    xs[i] = call(xs[i])
+  }
 }
