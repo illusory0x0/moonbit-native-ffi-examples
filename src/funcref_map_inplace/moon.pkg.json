@@ -3,6 +3,9 @@
   "targets": {
     "top.mbt": [
       "native"
+    ],
+    "top_wasm.mbt": [
+      "wasm-gc", "wasm", "js"
     ]
   },
   "native-stub": [
