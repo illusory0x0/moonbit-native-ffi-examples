@@ -18,7 +18,7 @@ fn qsort(xs : FixedArray[Point], comp : (Point, Point) -> Int) -> Unit {
 }
 
 ///|
-fn main {
+test "qsort_closure functionality" {
   try {
     let xs : FixedArray[Point] = @quickcheck.samples(10)
       |> FixedArray::from_array

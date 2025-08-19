@@ -18,7 +18,7 @@ fn map_inplace(xs : FixedArray[Point], closure : (Point) -> Point) -> Unit {
 }
 
 ///|
-fn main {
+test "map_inplace functionality" {
   let xs : FixedArray[Point] = @quickcheck.samples(4) |> FixedArray::from_array
   let mut i = 0
   fn f(x) {

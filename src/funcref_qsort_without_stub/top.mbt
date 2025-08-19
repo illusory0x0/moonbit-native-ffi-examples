@@ -31,7 +31,7 @@ fn qsort(
 }
 
 ///|
-fn main {
+test "qsort_without_stub functionality" {
   try {
     let xs : FixedArray[Int] = @quickcheck.samples(10) |> FixedArray::from_array
     let ys = xs.copy()
