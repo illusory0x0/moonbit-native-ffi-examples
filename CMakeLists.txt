@@ -8,8 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(TO_CMAKE_PATH $ENV{MOON_HOME} MOON_HOME)
+file(TO_CMAKE_PATH $ENV{MOON_BIN} MOON_BIN)
 
 add_executable(main main.c)
 
-include_directories(${MOON_HOME}/include)
+include_directories(${MOON_BIN}/../include)
