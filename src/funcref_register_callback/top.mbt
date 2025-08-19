@@ -2,7 +2,7 @@
 #borrow(call, closure)
 extern "c" fn ffi_register_callback(
   call : FuncRef[(() -> Unit) -> Unit],
-  closure : () -> Unit
+  closure : () -> Unit,
 ) = "register_callback"
 
 ///|

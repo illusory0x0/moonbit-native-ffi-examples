@@ -9,7 +9,7 @@ struct Point {
 extern "c" fn ffi_map_inplace(
   xs : FixedArray[Point],
   call : FuncRef[((Point) -> Point, Point) -> Point],
-  closure : (Point) -> Point
+  closure : (Point) -> Point,
 ) = "ffi_map_inplace"
 
 ///|
