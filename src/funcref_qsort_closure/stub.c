@@ -9,7 +9,7 @@ typedef moonbit_point_t *moonbit_fixedarray_point_t;
 typedef void* moonbit_closure_t;
 
 struct comp_context {
-  int (*call)(moonbit_closure_t colsure,moonbit_point_t lhs, moonbit_point_t rhs);
+  int (*call)(moonbit_closure_t closure,moonbit_point_t lhs, moonbit_point_t rhs);
   moonbit_closure_t closure;
 };
 

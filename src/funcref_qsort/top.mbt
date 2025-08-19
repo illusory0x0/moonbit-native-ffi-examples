@@ -12,7 +12,7 @@ extern "c" fn qsort(
 ) = "ffi_qsort"
 
 ///|
-fn main {
+test "qsort functionality" {
   try {
     let xs : FixedArray[Point] = @quickcheck.samples(10)
       |> FixedArray::from_array

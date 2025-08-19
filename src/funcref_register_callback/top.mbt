@@ -14,7 +14,7 @@ fn register_callback(closure : () -> Unit) -> Unit {
 }
 
 ///|
-fn main {
+test "register_callback functionality" {
   let s1 = "moonbit"
   register_callback(fn() {
     println(s1) // capture free variables
