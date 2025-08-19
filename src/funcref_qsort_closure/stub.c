@@ -48,12 +48,12 @@ void fqc_ffi_qsort(moonbit_fixedarray_point_t xs,
   context.closure = closure;
 #if defined(_WIN32) || defined(_WIN64)
   // https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/qsort-s?view=msvc-170
-  qsort_s(xs, count, elem_size, (void *)comp, &context);
+  qsort_s(xs, count, elem_size, (void *)fqc_comp, &context);
 #elif defined(__APPLE__)
   // https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/qsort_r.3.html
   qsort_r(xs, count, elem_size, &context, (void *)fqc_comp);
 #else
   // https://www.man7.org/linux/man-pages/man3/qsort.3.html
-  qsort_r(xs, count, elem_size, (void *)comp, &context);
+  qsort_r(xs, count, elem_size, (void *)fqc_comp, &context);
 #endif
 }
