@@ -10,14 +10,17 @@ struct comp_context {
   int (*call)(moonbit_point_t lhs, moonbit_point_t rhs);
 };
 
+// Currently need fresh renaming for all symbols 
+// https://github.com/moonbitlang/moon/issues/969
+
 #if defined(_WIN32) || defined(_WIN64) || defined(__APPLE__)
 #include <stdlib.h>
-int comp(struct comp_context *context, moonbit_point_t *lhs,
+int fq_comp(struct comp_context *context, moonbit_point_t *lhs,
          moonbit_point_t *rhs)
 #else
 #define __USE_GNU // to order to use qsort_r
 #include <stdlib.h>
-int comp(moonbit_point_t *lhs, moonbit_point_t *rhs,
+int fq_comp(moonbit_point_t *lhs, moonbit_point_t *rhs,
          struct comp_context *context)
 #endif
 {
@@ -29,7 +32,7 @@ int comp(moonbit_point_t *lhs, moonbit_point_t *rhs,
 
 // https://en.cppreference.com/w/c/algorithm/qsort
 // both glibc and Windows CRT doesn't support ISO C qsort_s
-void ffi_qsort(moonbit_fixedarray_point_t xs,
+void fq_ffi_qsort(moonbit_fixedarray_point_t xs,
                int (*call)(moonbit_point_t lhs, moonbit_point_t rhs)) {
   size_t count = Moonbit_array_length(xs);
   size_t elem_size = sizeof(moonbit_point_t);
@@ -41,7 +44,7 @@ void ffi_qsort(moonbit_fixedarray_point_t xs,
   qsort_s(xs, count, elem_size, (void *)comp, &context);
 #elif defined(__APPLE__)
   // https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/qsort_r.3.html
-  qsort_r(xs, count, elem_size, &context, (void *)comp);
+  qsort_r(xs, count, elem_size, &context, (void *)fq_comp);
 #else
   // https://www.man7.org/linux/man-pages/man3/qsort.3.html
   qsort_r(xs, count, elem_size, (void *)comp, &context);

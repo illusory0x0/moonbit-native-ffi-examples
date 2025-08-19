@@ -14,10 +14,29 @@ fn register_callback(closure : () -> Unit) -> Unit {
 }
 
 ///|
-fn main {
+test "register_callback functionality" {
+  let output = StringBuilder::new()
   let s1 = "moonbit"
+  inspect(s1, content="moonbit") // capture free variables before registering
   register_callback(fn() {
-    println(s1) // capture free variables
+    output.write_string(s1)
+    output.write_char('\n')
   })
-  println("done")
+  let s2 = "apple"
+  register_callback(fn() {
+    output.write_string(s2)
+    output.write_char('\n')
+  })
+  inspect(
+    output,
+    content=(
+      #|moonbit
+      #|moonbit
+      #|moonbit
+      #|apple
+      #|apple
+      #|apple
+      #|
+    ),
+  )
 }
