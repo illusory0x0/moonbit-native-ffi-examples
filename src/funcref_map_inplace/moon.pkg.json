@@ -3,5 +3,11 @@
   "targets": {
     "top.mbt": ["native"]
   },
+  "link": {
+    "native": {
+      "cc-flags": "-fsanitize=address -fsanitize=undefined",
+      "stub-cc-flags": "-fsanitize=address -fsanitize=undefined"
+    }
+  },
   "native-stub": ["stub.c"]
 }
