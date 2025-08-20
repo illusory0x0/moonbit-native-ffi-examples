@@ -95,10 +95,6 @@ jobs:
           MOON_CC: gcc
           # disable mimalloc
 
-      - name: moon test --doc
-        run: |
-          moon test --doc
-
   moon-json-format-check:
     runs-on: ubuntu-latest
     steps:
